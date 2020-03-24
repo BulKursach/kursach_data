@@ -16,7 +16,11 @@ import java.util.Collection;
 import static org.apache.commons.math3.exception.util.LocalizedFormats.FUNCTION;
 
 public class MainLogic  {
-
+    /**
+     * Это тестовый мейн, желательно ничего не стирать
+     *
+     * @param args
+     */
 
     public static void main(String[] args) {
         /*double[] giveRes ={747126,733873,709995,649035,612045};// необходимый хардкод
@@ -49,6 +53,24 @@ public class MainLogic  {
         System.out.println(simpleRegression.predict(2018.0));   // predict на 2018 год
 
 
+    }
+
+    double[][] mass;
+    SimpleRegression sr;
+
+    public  double predict(double year){
+       return sr.predict(year);
+    }
+
+    public MainLogic(double[][] mass) {
+        this.mass = mass;
+        sr = new SimpleRegression(true);
+    }
+    public  void addData(double[][] mass){
+        sr.addData(mass);
+    }
+    public void addData(double x, double y){
+        sr.addData(x,y);
     }
 
 }
