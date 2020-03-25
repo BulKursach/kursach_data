@@ -22,6 +22,8 @@ public class MainLogic  {
      * @param args
      */
 
+    //SENPAI!
+
     public static void main(String[] args) {
         /*double[] giveRes ={747126,733873,709995,649035,612045};// необходимый хардкод
         double[] years = {2013,2014,2015,2016,2017};
