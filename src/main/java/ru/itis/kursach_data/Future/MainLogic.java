@@ -17,15 +17,19 @@ import static org.apache.commons.math3.exception.util.LocalizedFormats.FUNCTION;
 
 public class MainLogic  {
     /**
-     * Это тестовый мейн, желательно ничего не стирать
-     *
+     * Это тестовый мейн, желательно ничего не стирать,  к финальной версии всё подчистим
+     * кратко, - При создании экземпляра MainLogic отдаём туда вложенный массив
+     * где каждый из подмассивов состоит из пары - год, значение(см main)
+     *для прогноза значений используем predict(year) ВАЖНО: где year - год в double
+     * Для добавления последующих значений, можно использовать addData , перегруженный, (либо добавляем такой же массив,
+     * либо 2 дабла (год-значение))
      * @param args
      */
 
     //SENPAI!
 
     public static void main(String[] args) {
-        /*double[] giveRes ={747126,733873,709995,649035,612045};// необходимый хардкод
+        /*double[] giveRes ={747126,733873,709995,649035,612045};
         double[] years = {2013,2014,2015,2016,2017};
         double t = 0;
         Collection<WeightedObservedPoint> observations = new ArrayList<>();
@@ -38,10 +42,16 @@ public class MainLogic  {
         state = state.withMaxIterations(20);
         System.out.println(state.getProblem(observations).getObservationSize());
         // creating regression object, passing true to have intercept term*/
-        SimpleRegression simpleRegression = new SimpleRegression(true);
+         SimpleRegression simpleRegression = new SimpleRegression(true);
 
         // passing data to the model
         // model will be fitted automatically by the class
+
+        //simpleRegression.addData(mass);
+       // System.out.println("slope = " + simpleRegression.getSlope());
+        //System.out.println("intercept = " + simpleRegression.getIntercept());
+       // System.out.println(simpleRegression.predict(2018.0));   // predict на 2018 год
+
         double[][] mass = new double[][]{  // Сюда загрузку данных ввиде двойного массива года-значенич
                 {2013, 747126},
                 {2014, 733873},
@@ -49,24 +59,25 @@ public class MainLogic  {
                 {2016, 649035},
                 {2017,612045}
         };
-        simpleRegression.addData(mass);
-       // System.out.println("slope = " + simpleRegression.getSlope());
-        //System.out.println("intercept = " + simpleRegression.getIntercept());
-        System.out.println(simpleRegression.predict(2018.0));   // predict на 2018 год
+
+        MainLogic pr = new MainLogic(mass);
+        System.out.println((int)pr.predict(2018.0)); //прогноз на 2019
 
 
     }
 
-    double[][] mass;
-    SimpleRegression sr;
+    //private double[][] mass;
+    private SimpleRegression sr;
 
     public  double predict(double year){
        return sr.predict(year);
     }
 
     public MainLogic(double[][] mass) {
-        this.mass = mass;
+        //this.mass = mass;
         sr = new SimpleRegression(true);
+        sr.addData(mass);
+
     }
     public  void addData(double[][] mass){
         sr.addData(mass);
@@ -74,5 +85,20 @@ public class MainLogic  {
     public void addData(double x, double y){
         sr.addData(x,y);
     }
+    public void removeData(double x, double y){
+        sr.removeData(x,y);
+    }
+    public void removeDara(double[][] mass ){
+        sr.removeData(mass);
+    }
 
+
+
+    public SimpleRegression getSr() {
+        return sr;
+    }
+
+    public void setSr(SimpleRegression sr) {
+        this.sr = sr;
+    }
 }
