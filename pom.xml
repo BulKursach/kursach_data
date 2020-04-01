@@ -26,7 +26,13 @@
         </repository>
     </repositories>
 
+
     <dependencies>
+        <dependency>
+            <groupId>com.github.signaflo</groupId>
+            <artifactId>timeseries</artifactId>
+            <version>0.4</version>
+        </dependency>
 
 
         <dependency>
