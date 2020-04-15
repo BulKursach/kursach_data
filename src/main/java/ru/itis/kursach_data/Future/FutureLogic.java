@@ -28,12 +28,13 @@ public class FutureLogic {
         double[] valuemass = new double[]{ 747126, 733873, 709995, 649035,612045};
 
 
-        TimeSeries timeSeries = TestData.debitcards;
-        TimeSeries timeSeries1 = Ts.newAnnualSeries(2013,valuemass);
-        ArimaOrder modelOrder = ArimaOrder.order(1,1,0);
+       //TimeSeries timeSeries = TestData.debitcards;
+        TimeSeries timeSeries1 = Ts.newAnnualSeries(valuemass);
+        ArimaOrder modelOrder = ArimaOrder.order(0,0,1);
         Plots.plot(timeSeries1);
         Arima model = Arima.model(timeSeries1,modelOrder);
-        Forecast forecast = model.forecast(1);
+        Forecast forecast = model.forecast(7);
+
         //forecast.pointEstimates().
         System.out.println(Arrays.toString(forecast.pointEstimates().asArray()));
         TimeSeries timeSeries2 = Ts.newAnnualSeries(forecast.pointEstimates().asArray());
