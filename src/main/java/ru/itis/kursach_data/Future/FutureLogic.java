@@ -1,6 +1,18 @@
 package ru.itis.kursach_data.Future;
 
+import com.github.signaflo.data.visualization.Plots;
 import com.github.signaflo.math.polynomial.interpolation.NewtonPolynomial;
+import com.github.signaflo.timeseries.Ts;
+import com.github.signaflo.timeseries.model.arima.ArimaCoefficients;
+import com.github.signaflo.timeseries.model.arima.ArimaOrder;
+import com.github.signaflo.timeseries.model.arima.ArimaProcess;
+import com.github.signaflo.timeseries.TestData;
+import com.github.signaflo.timeseries.TimeSeries;
+import com.github.signaflo.timeseries.forecast.Forecast;
+import com.github.signaflo.timeseries.model.Model;
+import com.github.signaflo.timeseries.model.arima.Arima;
+import com.github.signaflo.timeseries.model.arima.ArimaOrder;
+import java.util.Arrays;
 
 //Теперь Фичи проверяем тут (Насчёт прогнозов и тп)
 public class FutureLogic {
@@ -13,8 +25,19 @@ public class FutureLogic {
                 {2017,612045}
         };
         double[] pointmass = new double[]{2013,2016,2014,2017};           // Тестовый вариант (через интерполяцию ньютона) поиска недостающих значений
-        double[] valuemass = new double[]{747126,649035,733873,612045};
-        NewtonPolynomial np = new NewtonPolynomial(pointmass,valuemass);
-        System.out.println(np.evaluateAt(2015));
+        double[] valuemass = new double[]{ 747126, 733873, 709995, 649035,612045};
+
+
+        TimeSeries timeSeries = TestData.debitcards;
+        TimeSeries timeSeries1 = Ts.newAnnualSeries(2013,valuemass);
+        ArimaOrder modelOrder = ArimaOrder.order(1,1,0);
+        Plots.plot(timeSeries1);
+        Arima model = Arima.model(timeSeries1,modelOrder);
+        Forecast forecast = model.forecast(1);
+        //forecast.pointEstimates().
+        System.out.println(Arrays.toString(forecast.pointEstimates().asArray()));
+        TimeSeries timeSeries2 = Ts.newAnnualSeries(forecast.pointEstimates().asArray());
+        Plots.plot(timeSeries2);
+        System.out.println(forecast);
     }
 }
